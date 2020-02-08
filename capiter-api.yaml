@@ -1,0 +1,91 @@
+openapi: 3.0.0
+servers:
+  - url: '35.242.242.45'
+info:
+  version: "1.0_oas3"
+  title: Capiter-Backend
+  description: '# These are 35.242.242.45 backend Webservice Endpoints'
+  contact:
+    name: Mohamed Hassaballah
+tags:
+  - name: Root
+  - name: Authentication
+  - name: Users
+  - name: Companies
+
+paths:
+
+
+  ##############################              Authentication Apis                 ################
+
+  /capiter/api/v1/auth/{mobileNo}/password-status:
+    get:
+      tags:
+        - Authentication
+      description: Get user password setting status
+      operationId: userPassStatus
+      parameters:
+        - $ref: "#/components/parameters/mobileNoPathParam"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordSettingResponseDto'
+
+#        '400':
+#          $ref: '#/components/responses/errorResponse'
+#        '500':
+#          $ref: '#/components/responses/errorResponse'
+
+
+
+
+
+
+
+
+
+
+
+####################################        Components         #########################################
+
+components:
+
+  schemas:
+
+
+
+
+    PasswordSettingResponseDto:
+      type: object
+      properties:
+        isPasswordSet:
+          type: boolean
+          example: false
+      required:
+        - isPasswordSet
+
+
+
+
+
+
+  parameters:
+    idPathParam:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: id in path param
+
+    mobileNoPathParam:
+      in: path
+      name: mobileNo
+      required: true
+      schema:
+        type: string
+      description: Customer Mobile No.
