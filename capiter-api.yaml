@@ -39,8 +39,21 @@ paths:
 #        '500':
 #          $ref: '#/components/responses/errorResponse'
 
-
-
+  /capiter/api/v1/auth/set-password:
+    post:
+      tags:
+        - Authentication
+      description: Set user password
+      operationId: setUserPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingUserPasswordRequest'
+      responses:
+        '200':
+          description: OK
 
 
 
@@ -67,7 +80,18 @@ components:
       required:
         - isPasswordSet
 
-
+    SettingUserPasswordRequest:
+      type: object
+      properties:
+        mobileNo:
+          type: string
+          example: testCode
+        password:
+          type: string
+          example: testText
+      required:
+        - mobileNo
+        - password
 
 
 
