@@ -57,8 +57,19 @@ paths:
 
 
 
+  ##############################              Authentication Apis                 ################
 
-
+  /capiter/api/v1/users/{id}/deactivate:
+    post:
+      tags:
+        - Users
+      description: deactivate user
+      operationId: deactivateUser
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        '200':
+          description: OK
 
 
 
