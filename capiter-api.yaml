@@ -95,7 +95,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
 
-  ##############################              Authentication Apis                 ################
+  ##############################              Users Apis                 ################
 
   /capiter/api/v1/users/{id}/deactivate:
     post:
@@ -109,17 +109,46 @@ paths:
         '200':
           description: OK
 
+  /capiter/api/v1/users/{companyId}:
+    get:  
+      tags:
+        - Users
+      description: List specific company's users
+      operationId: listCompanyUsers
+      parameters:
+        - in: path
+          name: companyId
+          $ref: "#/components/parameters/companyIdPathParam"
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersListingResponse'
+        # '401':
+        #   content:
+        #     application/json:
+        #       schema:
+        #         $ref: '#/components/schemas/UnauthorizedAccess'
 
 
 ####################################        Components         #########################################
 
 components:
 
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+  
   schemas:
-
-
-
-
     PasswordSettingResponseDto:
       type: object
       properties:
@@ -156,7 +185,7 @@ components:
     LoginResponse:
       type: object
       properties:
-        id: 
+        id:
           type: number
         authToken: 
           type: string
@@ -166,9 +195,39 @@ components:
           type: string
         mobileNo:
           type: string
-      required: 
+      required:
         - mobileOrEmail
         - passowrd
+
+    UsersListingResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserResponse'
+
+    UserResponse:
+      type: object
+      properties:
+        id: 
+          type: integer
+        mobileNo:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        upcomingInstallmentAmount:
+          type: integer
+        upcomingInstallmentDate:
+          type: string
+          format: date
+          pattern: "YYYY-MM-DD"
+        verified:
+          type: boolean
+        creationDate:
+          type: string
+          format: date-time
+
+
 
   parameters:
     idPathParam:
@@ -187,3 +246,12 @@ components:
       schema:
         type: string
       description: Customer Mobile No.
+
+    companyIdPathParam:
+      in: path
+      name: companyId
+      required: true
+      schema:
+        type: number
+      description: company id.
+
