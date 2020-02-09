@@ -70,6 +70,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
 
   /capiter/api/v1/auth/dashboard-login:
     post:
@@ -86,6 +90,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
 
   ##############################              Authentication Apis                 ################
 
@@ -144,7 +152,23 @@ components:
       required: 
         - mobileOrEmail
         - passowrd
-
+    
+    LoginResponse:
+      type: object
+      properties:
+        id: 
+          type: number
+        authToken: 
+          type: string
+        verified: 
+          type: boolean
+        name:
+          type: string
+        mobileNo:
+          type: string
+      required: 
+        - mobileOrEmail
+        - passowrd
 
   parameters:
     idPathParam:
