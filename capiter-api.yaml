@@ -138,6 +138,87 @@ paths:
         #         $ref: '#/components/schemas/UnauthorizedAccess'
 
 
+
+
+
+  ##############################              Lookups Apis                 ################
+
+
+
+  /capiter/api/v1/lookups/countries:
+    get:
+      tags:
+        - Lookups
+      description: List countries
+      operationId: listCountries
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Country"
+
+  /capiter/api/v1/lookups/{countryId}/cities:
+    get:
+      tags:
+        - Lookups
+      description: List cities of a country
+      operationId: listCitiesOfACountry
+      parameters:
+        - in: path
+          name: countryId
+          $ref: "#/components/parameters/countryIdPathParam"
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/City"
+
+  /capiter/api/v1/lookups/{cityId}/areas:
+    get:
+      tags:
+        - Lookups
+      description: List areas of a city
+      operationId: listAreasOfACity
+      parameters:
+        - in: path
+          name: cityId
+          $ref: "#/components/parameters/cityIdPathParam"
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Area"
+
+
+
 ####################################        Components         #########################################
 
 components:
@@ -149,6 +230,9 @@ components:
       bearerFormat: JWT 
   
   schemas:
+
+
+
     PasswordSettingResponseDto:
       type: object
       properties:
@@ -227,6 +311,66 @@ components:
           type: string
           format: date-time
 
+  ############### Lookups schemas   ####################
+
+    Country:
+      type: object
+      properties:
+        countryId:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        name:
+          type: string
+          example: Egypt
+      required:
+        - countryId
+        - name
+
+    City:
+      type: object
+      properties:
+        cityId:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        name:
+          type: string
+          example: Cairo
+        country:
+          $ref: '#/components/schemas/Country'
+      required:
+        - cityId
+        - name
+        - country
+
+    Area:
+      type: object
+      properties:
+        areaId:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        name:
+          type: string
+          example: Cairo
+        city:
+          $ref: '#/components/schemas/City'
+      required:
+        - areaId
+        - name
+        - city
+
+
+
+
+
+
+
+
+
+########################################################################################################################
+
 
 
   parameters:
@@ -255,3 +399,18 @@ components:
         type: number
       description: company id.
 
+    countryIdPathParam:
+      in: path
+      name: countryId
+      required: true
+      schema:
+        type: number
+      description: country id.
+
+    cityIdPathParam:
+      in: path
+      name: cityId
+      required: true
+      schema:
+        type: number
+      description: city id.
