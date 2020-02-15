@@ -143,6 +143,38 @@ paths:
         #         $ref: '#/components/schemas/UnauthorizedAccess'
 
 
+  ##############################              Companies Apis                 ################
+
+
+  /capiter/api/v1/companies:
+    post:
+      tags:
+        - Companies
+      description: create a new company
+      operationId: createCompany
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CompanyCreationResponse"
+
+
+
 
 
   ##############################              Credit Options Apis                 ################
@@ -435,6 +467,80 @@ components:
         creationDate:
           type: string
           format: date-time
+
+
+
+  #########################               Companies Schemas               ##################################
+
+
+    CompanyCreationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        registeredName:
+          type: string
+        creditLimit:
+          type: number
+          format: double
+          example: "12.5"
+        counterPartyId:
+          type: integer
+          format: int64
+          example: 12
+        creditOptionId:
+          type: integer
+          format: int64
+          example: 12
+        industryId:
+          type: integer
+          format: int64
+          example: 12
+        companyTypeId:
+          type: integer
+          format: int64
+          example: 12
+        businessTypeId:
+          type: integer
+          format: int64
+          example: 12
+        address:
+          type: string
+        areaId:
+          type: integer
+          format: int64
+          example: 12
+        districtId:
+          type: integer
+          format: int64
+          example: 12
+      required:
+        - name
+        - registeredName
+        - creditLimit
+        - creditOptionId
+        - industryId
+        - companyTypeId
+        - businessTypeId
+        - address
+        - areaId
+
+
+
+    CompanyCreationResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        creationDate:
+          type: string
+          example: "2018-09-05T19:04:53.178Z"
+          format: date-time
+      required:
+        - id
+        - creatoinDae
+
+
 
   ############### Lookups schemas   ####################
 
