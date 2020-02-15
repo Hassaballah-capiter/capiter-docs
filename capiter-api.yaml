@@ -658,6 +658,9 @@ components:
           type: integer
           format: int64
           example: 2165529378315486654
+        name:
+          type: string
+          example: dummyCreditName
         frequencyId:
           type: integer
           format: int64
@@ -688,6 +691,7 @@ components:
           example: "12.5"
       required:
         - id
+        - name
         - frequencyId
         - tenureCount
         - tenurePercentage
