@@ -217,7 +217,30 @@ paths:
                 items:
                   $ref: "#/components/schemas/Area"
 
-
+  /capiter/api/v1/lookups/{areaId}/districts:
+    get:
+      tags:
+        - Lookups
+      description: List districts of an area
+      operationId: listDistrictsOfArea
+      parameters:
+        - in: path
+          name: areaId
+          $ref: "#/components/parameters/areaIdPathParam"
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/District"
 
   /capiter/api/v1/lookups/company-industries:
     get:
@@ -386,7 +409,7 @@ components:
     Country:
       type: object
       properties:
-        countryId:
+        id:
           type: integer
           format: int64
           example: 2165529378315486654
@@ -394,13 +417,13 @@ components:
           type: string
           example: Egypt
       required:
-        - countryId
+        - id
         - name
 
     City:
       type: object
       properties:
-        cityId:
+        id:
           type: integer
           format: int64
           example: 2165529378315486654
@@ -410,14 +433,14 @@ components:
         country:
           $ref: '#/components/schemas/Country'
       required:
-        - cityId
+        - id
         - name
         - country
 
     Area:
       type: object
       properties:
-        areaId:
+        id:
           type: integer
           format: int64
           example: 2165529378315486654
@@ -427,9 +450,26 @@ components:
         city:
           $ref: '#/components/schemas/City'
       required:
-        - areaId
+        - id
         - name
         - city
+
+    District:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        name:
+          type: string
+          example: Maadi
+        area:
+          $ref: '#/components/schemas/Area'
+      required:
+        - id
+        - name
+        - area
 
 
     CompanyIndustry:
@@ -524,6 +564,14 @@ components:
       schema:
         type: number
       description: city id.
+
+    areaIdPathParam:
+      in: path
+      name: areaId
+      required: true
+      schema:
+        type: number
+      description: area id.
 
     companyTypeIdParam:
       in: path
