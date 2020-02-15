@@ -12,6 +12,7 @@ tags:
   - name: Authentication
   - name: Users
   - name: Companies
+  - name: CreditOptions
 
 paths:
 
@@ -105,6 +106,10 @@ paths:
       operationId: deactivateUser
       parameters:
         - $ref: "#/components/parameters/idPathParam"
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
       responses:
         '200':
           description: OK
@@ -136,6 +141,33 @@ paths:
         #     application/json:
         #       schema:
         #         $ref: '#/components/schemas/UnauthorizedAccess'
+
+
+
+
+  ##############################              Credit Options Apis                 ################
+
+
+  /capiter/api/v1/credit-options:
+    get:
+      tags:
+        - CreditOptions
+      description: get all creditOptions
+      operationId: getCreditOptions
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CreditOption"
 
 
 
@@ -513,6 +545,52 @@ components:
       required:
         - id
         - name
+
+
+    CreditOption:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        frequencyId:
+          type: integer
+          format: int64
+          example: 1
+        tenureCount:
+          type: integer
+          format: int64
+          example: 22
+        tenurePercentage:
+          type: number
+          format: double
+          example: "12.5"
+        gracePeriodCount:
+          type: integer
+          format: int64
+          example: 12
+        gracePeriodPercentage:
+          type: number
+          format: double
+          example: "12.5"
+        latencyCount:
+          type: integer
+          format: int64
+          example: 30
+        latencyPercentage:
+          type: number
+          format: double
+          example: "12.5"
+      required:
+        - id
+        - frequencyId
+        - tenureCount
+        - tenurePercentage
+        - gracePeriodCount
+        - gracePeriodPercentage
+        - latencyCount
+        - latencyPercentage
 
 
 
