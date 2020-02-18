@@ -170,6 +170,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CompanyCreationResponse"
+    get:
+      tags:
+        - Companies
+      description: List companies
+      operationId: listCompanies
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            $ref: '#/components/securitySchemes/bearerAuth'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SingleCompanyDto"
 
 
   /capiter/api/v1/companies/{id}/deactivate:
@@ -554,7 +573,114 @@ components:
           format: date-time
       required:
         - id
-        - creatoinDae
+        - creatoinDate
+
+    SingleCompanyDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          example: "Capiter"
+        registeredName:
+          type: string
+          example: "Capiter-reg"
+        active:
+          type: boolean
+          example: false
+        CommercialRegister:
+          type: number
+          example: 123654
+        companyCode:
+          type: number
+          example: 123654
+        registrationNumber:
+          type: number
+          example: 123654
+        creditLimit:
+          type: number
+          format: double
+          example: "120.0"
+        counterPartyId:
+          type: number
+          example: 123654
+        creditOption:
+          $ref: "#/components/schemas/CreditOption"
+        companyIndustry:
+          $ref: "#/components/schemas/CompanyIndustry"
+        companyAddress:
+          $ref: "#/components/schemas/CompanyAddressDto"
+        companyType:
+          $ref: "#/components/schemas/CompanyType"
+        businessType:
+          $ref: "#/components/schemas/BusinessType"
+        creationDate:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - registeredName
+        - active
+        - CommercialRegister
+        - companyCode
+        - registrationNumber
+        - creditLimit
+        - creditOption
+        - companyIndustry
+        - companyAddress
+        - companyType
+        - businessType
+        - creationDate
+        - counterPartyId
+
+
+
+    CompanyAddressDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        areaId:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        districtId:
+          type: integer
+          format: int64
+          example: 2165529378315486654
+        aptNo:
+          type: integer
+          format: int64
+          example: 21
+        floorNo:
+          type: integer
+          format: int64
+          example: 4
+        buildingNo:
+          type: string
+          example: 388H
+        street:
+          type: string
+          example: Maadi St.
+        landmark:
+          type: string
+          example: Near Kiosk
+      required:
+        - id
+        - areaId
+        - districtId
+        - aptNo
+        - floorNo
+        - buildingNo
+        - street
+        - landmark
+
+
+
 
 
 
