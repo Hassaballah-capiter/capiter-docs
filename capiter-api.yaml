@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: '35.242.242.45'
+  - url: '34.66.118.56'
 info:
   version: "1.0_oas3"
   title: Capiter-Backend
